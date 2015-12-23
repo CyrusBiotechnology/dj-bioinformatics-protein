@@ -49,17 +49,17 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('uuid', models.UUIDField(default=uuid.uuid4, unique=True, editable=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('full_query_sequence', models.ForeignKey(to='formats.FASTA')),
+                ('full_query_sequence', models.ForeignKey(to='dj_bioinformatics_protein.FASTA')),
             ],
         ),
         migrations.AddField(
             model_name='alignment',
             name='full_query_sequence',
-            field=models.ForeignKey(to='formats.FASTA'),
+            field=models.ForeignKey(to='dj_bioinformatics_protein.FASTA'),
         ),
         migrations.AddField(
             model_name='alignment',
             name='multiple_alignments',
-            field=models.ForeignKey(to='formats.MultipleAlignments'),
+            field=models.ForeignKey(to='dj_bioinformatics_protein.MultipleAlignments'),
         ),
     ]

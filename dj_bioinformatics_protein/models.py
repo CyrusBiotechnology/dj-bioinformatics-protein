@@ -8,7 +8,7 @@ import json
 from django.db import models
 from django.conf import settings
 
-logger = logging.getLogger('formats.' + __name__)
+logger = logging.getLogger('dj_bioinformatics_protein.' + __name__)
 
 FORMATS_SETTINGS = {}
 try:
@@ -175,7 +175,7 @@ except (AttributeError, IndexError, KeyError):
 
 
 class MultipleAlignments(models.Model):
-    full_query_sequence = models.ForeignKey('formats.FASTA')
+    full_query_sequence = models.ForeignKey('dj_bioinformatics_protein.FASTA')
 
     # SHA 256 hash is generated on the fly, to enforce uniqueness of sequence field
     # sha256 = models.CharField(unique=True, editable=False, null=True, blank=True, max_length=255)
@@ -222,7 +222,7 @@ class Alignment(models.Model):
     # SHA 256 hash is generated on the fly, to enforce uniqueness of sequence field
     sha256 = models.CharField(unique=True, editable=False, null=True, blank=True, max_length=255)
 
-    full_query_sequence = models.ForeignKey('formats.FASTA')
+    full_query_sequence = models.ForeignKey('dj_bioinformatics_protein.FASTA')
 
     user_template = False # search for pdb database or user defined files
 
@@ -254,7 +254,7 @@ class Alignment(models.Model):
 
     threaded_template = models.TextField(blank=True, null=True)
 
-    multiple_alignments = models.ForeignKey('formats.MultipleAlignments')
+    multiple_alignments = models.ForeignKey('dj_bioinformatics_protein.MultipleAlignments')
 
     @property
     def target_grishin_tag(self):
