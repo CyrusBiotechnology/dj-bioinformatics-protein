@@ -1,0 +1,11 @@
+from setuptools import setup
+
+setup(name='dj_bioinformatics_protein',
+      version='0.0.1',
+      description='Django utilities, formats, and tools for protein format storage and manipulation',
+      url='http://github.com/CyrusBiotechnology/dj-protein',
+      author='Peter Novotnak, Yifan Song',
+      author_email='peter@cyrusbio.com, yifan@cyrusbio.com',
+      license='MIT',
+      packages=['dj_bioinformatics_protein'],
+      zip_safe=True)
