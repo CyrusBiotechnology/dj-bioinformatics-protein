@@ -48,7 +48,8 @@ class AJobSerializer(serializers.HyperlinkedModelSerializer):
     that persisted object to the 'AJob' we are creating. During serialization, 
     the serializer automatically pulls from __str__ on the related object, 
     which should be configured to return the formatted file. """
-    fasta_in = serializers.CharField(max_length=MAX_FASTA_FILE_LENGTH)
+    fasta_in = serializers.CharField(max_length=MAX_FASTA_FILE_LENGTH,
+                                     style={'base_template': 'textarea.html'})
 
     ...the rest of your serializer code
 ```
@@ -57,18 +58,19 @@ Then, override your `create`, `update`, etc. Methods to parse the FASTA string f
 client. 
  
 ```python
-def create(self, validated_data):
-    """ During creation, you'll want to create your FASTA object in the DB and 
-    update the model to point at it's PK
-    """
-    fasta = FASTA.from_fasta(validated_data.pop('fasta_in'))
-    logger.debug("sequence is %s" % fasta.sequence)
-    # Get or create fasta object
-    try:
-        fasta = FASTA.objects.get(sha256=fasta.hash)
-    except FASTA.DoesNotExist:
-        fasta.save()
     ...
+    def create(self, validated_data):
+        """ During creation, you'll want to create your FASTA object in the DB and 
+        update the model to point at it's PK
+        """
+        fasta = FASTA.from_fasta(validated_data.pop('fasta_in'))
+        logger.debug("sequence is %s" % fasta.sequence)
+        # Get or create fasta object
+        try:
+            fasta = FASTA.objects.get(sha256=fasta.hash)
+        except FASTA.DoesNotExist:
+            fasta.save()
+        ...
 ```
 
 As mentioned in the comments on the serializer field, serialization is handled 
