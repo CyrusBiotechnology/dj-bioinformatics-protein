@@ -1,33 +1,35 @@
 # Formats Django App
-This application is meant to be used behind the scenes, to provide data models that other
-apps reference via FK relationships.
+This application is meant to be used behind the scenes, to provide data models 
+that other apps reference via FK relationships.
 
-## Installing
-Install this project as a submodule, or simply grab a snapshot of it from Github. Then
-add it to your project as you would with any other app in your `INSTALLED_APPS` setting.
+# Installing
+This module is available from PyPi; `pip install dj-bioinformatics-protein`.
+
+Then add it to your project as you would with any other app in your 
+`INSTALLED_APPS` setting.
 
     INSTALLED_APPS = [
         ...
-        'formats'
+        'dj_bioinformatics_protein'
     ]
 
 Then, migrate your database to create requisite tables.
 
-## Using
+# Using
 
-### Models
+## Models
 All you need to do to use a format is reference it by PK!
 
 ```python
 class AJob(models.Model):
     
-    fasta_in = models.ForeignKey('formats.FASTA')
+    fasta_in = models.ForeignKey('dj_bioinformatics_protein.FASTA')
     
     ...the rest of your model's code
 ```
 
-### DRF
-In order to make `formats` convenient for you to use, a serializer and deserializer 
+## Django Rest Framework
+In order to make the app convenient for you to use, a serializer and deserializer 
 method to and from a string is provided for each model. This allows you to provide a 
 single field on your serializer that represents a fully assembled file that is stored
 as efficiently and with as little redundancy as possible in your database. 
@@ -72,7 +74,3 @@ def create(self, validated_data):
 As mentioned in the comments on the serializer field, serialization is handled 
 automatically since the `__str__` method of the model returns a properly formatted FASTA 
 file.
-
-## TODO
-
- - Register this app on PyPi under Cyrus's account.
