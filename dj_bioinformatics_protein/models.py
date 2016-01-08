@@ -17,6 +17,42 @@ except AttributeError:
     pass
 
 
+
+class PDB(models.Model):
+    pass
+
+
+class Mut(models.Model):
+
+
+class Mutfile(models.Model):
+
+
+    @property
+    def total(self):
+        raise NotImplementedError
+
+    @classmethod
+    def from_json(cls, json_muts):
+        """ Build a Mutfile object from JSON input. This JSON object should look something
+        like;
+
+            [
+                [
+                    {"wt":"V","pos":"61","mut":"G"}
+                ],
+                [
+                    {"wt":"E","pos":"5","mut":"G"},
+                    {"wt":"V","pos":"61","mut":"G"}
+                ]
+            ]
+
+
+        :param json_muts: A JSON representation of a mutfile
+        :return: Mutfile object
+        """
+
+
 class FASTA(models.Model):
     """ To the client, this is usually represented with the __str__ method; the entire
     file. However, there are lots of advantages to storing the FASTA file as 4 different
