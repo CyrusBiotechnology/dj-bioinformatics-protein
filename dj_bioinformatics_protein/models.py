@@ -219,9 +219,6 @@ class Alignment(models.Model):
         ('U', 'user'),
     ]
 
-    # SHA 256 hash is generated on the fly, to enforce uniqueness of sequence field
-    sha256 = models.CharField(unique=True, editable=False, null=True, blank=True, max_length=255)
-
     full_query_sequence = models.ForeignKey('dj_bioinformatics_protein.FASTA')
 
     user_template = False # search for pdb database or user defined files
@@ -317,11 +314,6 @@ class Alignment(models.Model):
         aln['target_grishin_tag'] = self.target_grishin_tag
         aln['grishin_lines'] = self.grishin_lines
         return aln
-
-    def save(self, *args, **kwargs):
-        if not self.sha256:
-            self.sha256 = self.hash
-        super(Alignment, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.grishin_lines
