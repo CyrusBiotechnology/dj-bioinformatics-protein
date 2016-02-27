@@ -2,13 +2,11 @@ import logging
 import hashlib
 import os
 import re
-import uuid
-import json
 
 from django.db import models
 from django.conf import settings
 
-from .fields import AminoAcidSequenceField
+from .fields import AminoAcidSequenceField, AminoAcidAlignmentField
 
 logger = logging.getLogger('dj_bioinformatics_protein.' + __name__)
 
@@ -182,8 +180,8 @@ class Alignment(models.Model):
     JSON_FIELDS = [
         "alignment_method",
         "rank",
-        "query_tag",
-        "target_tag",
+        "query_description",
+        "target_description",
         "target_pdb_code",
         "target_pdb_chain",
         "query_start",
@@ -205,7 +203,8 @@ class Alignment(models.Model):
 
     user_template = False  # search for pdb database or user defined files
 
-    query_sequence = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    full_query_sequence = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    query_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
     alignment_method = models.CharField(max_length=1, choices=ALIGN_METHOD_CHOICES)
     rank = models.IntegerField()
     active = models.BooleanField(default=True)
@@ -213,15 +212,15 @@ class Alignment(models.Model):
     # modeled sequence information
     query_start = models.IntegerField()  # 1 based
     query_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
-    modified_query_aln_seq = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    modified_query_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
 
     # template information
     target_start = models.IntegerField()  # 1 based
     target_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
     target_pdb_code = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CODE_LENGTH'])
     target_pdb_chain = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CHAIN_LENGTH'])
-    target_aln_seq = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
-    modified_target_aln_seq = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    target_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    modified_target_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
 
     p_correct = models.FloatField()  # current using Robetta p_correct calculator. to be improved using alignment score
 
@@ -239,7 +238,7 @@ class Alignment(models.Model):
 
     @property
     def grishin_lines(self):
-        outlines = "## %s %s\n" % (self.query_tag, self.target_grishin_tag)
+        outlines = "## %s %s\n" % (self.query_description, self.target_grishin_tag)
         outlines += "#  \n"
         outlines += "scores_from_program: 0\n"
 
