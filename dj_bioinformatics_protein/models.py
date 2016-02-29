@@ -195,11 +195,11 @@ class Alignment(models.Model):
 
     ALIGNMENT_SETTINGS = FORMATS_SETTINGS['ALIGNMENT']
 
-    ALIGN_METHOD_CHOICES = [
+    ALIGN_METHOD_CHOICES = (
         ('H', 'hhsearch'),
         ('S', 'sparksX'),
         ('U', 'user'),
-    ]
+    )
 
     user_template = False  # search for pdb database or user defined files
 
