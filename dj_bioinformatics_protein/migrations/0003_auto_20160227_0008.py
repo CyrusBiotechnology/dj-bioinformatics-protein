@@ -14,10 +14,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name='multiplealignments',
-            name='full_query_sequence',
-        ),
-        migrations.RemoveField(
             model_name='alignment',
             name='multiple_alignments',
         ),
