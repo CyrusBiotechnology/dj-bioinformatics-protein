@@ -4,11 +4,29 @@ from django.db import models
 from .validatiors import AminoAcidValidator, AminoAcidAlignmentValidator
 
 
-class AminoAcidSequenceField(models.CharField):
+class AminoAcidSequenceCharField(models.CharField):
     default_validators = [AminoAcidValidator]
     description = _("Amino acid sequence (up to %(max_length)s)")
 
 
-class AminoAcidAlignmentField(models.CharField):
+class AminoAcidAlignmentCharField(models.CharField):
     default_validators = [AminoAcidAlignmentValidator]
     description = _("Amino acid sequence (up to %(max_length)s)")
+
+
+class AminoAcidSequenceTextField(models.CharField):
+    default_validators = [AminoAcidValidator]
+    description = _("Amino acid sequence (up to %(max_length)s)")
+
+
+class AminoAcidAlignmentTextField(models.TextField):
+    default_validators = [AminoAcidAlignmentValidator]
+    description = _("Amino acid sequence (up to %(max_length)s)")
+
+
+class AminoAcidAlignmentField(AminoAcidAlignmentCharField):
+    pass
+
+
+class AminoAcidSequenceField(AminoAcidAlignmentCharField):
+    pass

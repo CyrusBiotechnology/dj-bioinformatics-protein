@@ -6,7 +6,7 @@ import re
 from django.db import models
 from django.conf import settings
 
-from .fields import AminoAcidSequenceField, AminoAcidAlignmentField
+from .fields import AminoAcidSequenceTextField, AminoAcidAlignmentTextField
 
 logger = logging.getLogger('dj_bioinformatics_protein.' + __name__)
 
@@ -203,8 +203,8 @@ class Alignment(models.Model):
 
     user_template = False  # search for pdb database or user defined files
 
-    full_query_sequence = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
-    query_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    full_query_sequence = AminoAcidSequenceTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    query_aln_seq = AminoAcidAlignmentTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
     alignment_method = models.CharField(max_length=1, choices=ALIGN_METHOD_CHOICES)
     rank = models.IntegerField()
     active = models.BooleanField(default=True)
@@ -212,15 +212,15 @@ class Alignment(models.Model):
     # modeled sequence information
     query_start = models.IntegerField()  # 1 based
     query_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
-    modified_query_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
+    modified_query_aln_seq = AminoAcidAlignmentTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
 
     # template information
     target_start = models.IntegerField()  # 1 based
     target_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
     target_pdb_code = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CODE_LENGTH'])
     target_pdb_chain = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CHAIN_LENGTH'])
-    target_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
-    modified_target_aln_seq = AminoAcidAlignmentField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
+    target_aln_seq = AminoAcidAlignmentTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    modified_target_aln_seq = AminoAcidAlignmentTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'], null=True)
 
     p_correct = models.FloatField()  # current using Robetta p_correct calculator. to be improved using alignment score
 
