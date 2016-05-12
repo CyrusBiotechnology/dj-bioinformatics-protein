@@ -43,7 +43,7 @@ class FASTA(models.Model):
     # FASTA body fields
     description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'])
     comments = models.TextField(null=True)
-    sequence = AminoAcidSequenceField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
+    sequence = AminoAcidSequenceTextField(max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
 
     def header(self, allow_comments=False):
         """ Generate the header string
