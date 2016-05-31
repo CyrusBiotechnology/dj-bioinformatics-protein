@@ -1,4 +1,4 @@
-# Formats Django App
+# Formats Django App [![CircleCI](https://circleci.com/gh/CyrusBiotechnology/dj-bioinformatics-protein.svg?style=svg)](https://circleci.com/gh/CyrusBiotechnology/dj-bioinformatics-protein)
 This application is meant to be used behind the scenes, to provide data models 
 that other apps reference via FK relationships.
 
