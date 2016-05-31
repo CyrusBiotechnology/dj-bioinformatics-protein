@@ -1,3 +1,7 @@
+dependencies:
+  pre:
+    - pip install pycodestyle
+
 test:
   pre:
-    - pycodestyle . --exclude="env,.git,lib" --show-source
+    - pycodestyle . --exclude="env,venv,.git,lib" --show-source
