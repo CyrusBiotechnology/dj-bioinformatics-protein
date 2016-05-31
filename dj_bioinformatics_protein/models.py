@@ -63,7 +63,7 @@ class FASTA(models.Model):
         :return: formatted body
         """
         sequence = str(self.sequence)
-        parsed = [sequence[i:i+line_length] for i in range(0, len(sequence), line_length)]
+        parsed = [sequence[i:i + line_length] for i in range(0, len(sequence), line_length)]
         return os.linesep.join(parsed)
 
     @property
@@ -242,8 +242,8 @@ class Alignment(models.Model):
         outlines += "#  \n"
         outlines += "scores_from_program: 0\n"
 
-        outlines += "%d %s\n" % (self.query_start-1, self.query_aln_seq)
-        outlines += "%d %s\n" % (self.target_start-1, self.target_aln_seq)
+        outlines += "%d %s\n" % (self.query_start - 1, self.query_aln_seq)
+        outlines += "%d %s\n" % (self.target_start - 1, self.target_aln_seq)
         outlines += "--\n\n"
         return str(outlines)
 
@@ -269,7 +269,7 @@ class Alignment(models.Model):
         aln = {}
         for attr in self.JSON_FIELDS:
             if attr not in self.__dict__.keys():
-                logger.warning("Missing data for %s in the alignment."%(attr))
+                logger.warning("Missing data for %s in the alignment." % attr)
             if attr in self.__dict__.keys() and self.__dict__[attr] is not None:
                 if attr == "alignment_method":
                     if self.alignment_method == 'H':
