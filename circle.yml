@@ -4,4 +4,4 @@ dependencies:
 
 test:
   pre:
-    - pycodestyle . --exclude="env,venv,.git,lib" --show-source
+    - pycodestyle . --exclude="env,venv,build,.git,lib" --ignore="E501" --show-source
