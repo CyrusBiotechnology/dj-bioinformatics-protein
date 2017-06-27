@@ -6,8 +6,6 @@ import re
 from django.db import models
 from django.conf import settings
 
-from dj_bioinformatics_protein.validatiors import AminoAcidWithNonCanonicalValidator, \
-    AminoAcidWithNonCanonicalAlignmentValidator
 from .fields import AminoAcidSequenceField, AminoAcidAlignmentField
 
 logger = logging.getLogger('dj_bioinformatics_protein.' + __name__)
@@ -46,7 +44,6 @@ class FASTA(models.Model):
     description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'])
     comments = models.TextField(null=True)
     sequence = AminoAcidSequenceField(
-        validators=[AminoAcidWithNonCanonicalValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH']
     )
 
@@ -209,11 +206,9 @@ class Alignment(models.Model):
     user_template = False  # search for pdb database or user defined files
 
     full_query_sequence = AminoAcidSequenceField(
-        validators=[AminoAcidWithNonCanonicalValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH']
     )
     query_aln_seq = AminoAcidAlignmentField(
-        validators=[AminoAcidWithNonCanonicalAlignmentValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH']
     )
     alignment_method = models.CharField(max_length=1, choices=ALIGN_METHOD_CHOICES)
@@ -224,7 +219,6 @@ class Alignment(models.Model):
     query_start = models.IntegerField()  # 1 based
     query_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
     modified_query_aln_seq = AminoAcidAlignmentField(
-        validators=[AminoAcidWithNonCanonicalAlignmentValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'],
         null=True
     )
@@ -235,10 +229,8 @@ class Alignment(models.Model):
     target_pdb_code = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CODE_LENGTH'])
     target_pdb_chain = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CHAIN_LENGTH'])
     target_aln_seq = AminoAcidAlignmentField(
-        validators=[AminoAcidWithNonCanonicalAlignmentValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
     modified_target_aln_seq = AminoAcidAlignmentField(
-        validators=[AminoAcidWithNonCanonicalAlignmentValidator],
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'],
         null=True
     )
