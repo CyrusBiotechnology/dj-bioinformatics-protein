@@ -12,6 +12,16 @@ class AminoAcidSequenceField(models.CharField):
     description = _("Amino acid sequence (up to %(max_length)s)")
 
 
+class AminoAcidSequenceTextField(models.TextField):
+    default_validators = [AminoAcidWithNonCanonicalValidator]
+    description = _("Amino acid sequence (up to %(max_length)s)")
+
+
 class AminoAcidAlignmentField(models.CharField):
+    default_validators = [AminoAcidWithNonCanonicalAlignmentValidator]
+    description = _("Amino acid sequence (up to %(max_length)s)")
+
+
+class AminoAcidAlignmentTextField(models.TextField):
     default_validators = [AminoAcidWithNonCanonicalAlignmentValidator]
     description = _("Amino acid sequence (up to %(max_length)s)")
