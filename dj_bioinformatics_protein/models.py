@@ -192,7 +192,7 @@ class Alignment(models.Model):
         "target_aln_seq",
         "score_line",
         "p_correct",
-        "threaded_template" # move out
+        "threaded_template"
     ]
 
     ALIGNMENT_SETTINGS = FORMATS_SETTINGS['ALIGNMENT']
@@ -208,7 +208,7 @@ class Alignment(models.Model):
     full_query_sequence = AminoAcidSequenceField(
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH']
     )
-    query_aln_seq = AminoAcidAlignmentField(  #disk
+    query_aln_seq = AminoAcidAlignmentTextField(  #disk
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH']
     )
     alignment_method = models.CharField(max_length=1, choices=ALIGN_METHOD_CHOICES)
@@ -218,19 +218,19 @@ class Alignment(models.Model):
     # modeled sequence information
     query_start = models.IntegerField()  # 1 based
     query_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
-    modified_query_aln_seq = AminoAcidAlignmentField(  #disk
+    modified_query_aln_seq = AminoAcidAlignmentTextField(
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'],
         null=True
     )
 
     # template information
     target_start = models.IntegerField()  # 1 based
-    target_description = models.CharField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)  # move to disk
+    target_description = models.TextField(max_length=FORMATS_SETTINGS['MAX_DESCRIPTION_LENGTH'], null=True)
     target_pdb_code = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CODE_LENGTH'])
     target_pdb_chain = models.CharField(max_length=ALIGNMENT_SETTINGS['PDB_CHAIN_LENGTH'])
-    target_aln_seq = AminoAcidAlignmentTextField(  # move to disk
+    target_aln_seq = AminoAcidAlignmentTextField(
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'])
-    modified_target_aln_seq = AminoAcidAlignmentField( # move to disk
+    modified_target_aln_seq = AminoAcidAlignmentTextField(
         max_length=FORMATS_SETTINGS['MAX_SEQUENCE_LENGTH'],
         null=True
     )
