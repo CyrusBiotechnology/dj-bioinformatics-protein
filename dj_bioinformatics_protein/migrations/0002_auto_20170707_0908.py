@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dj_bioinformatics_protein', '0001_initial_squashed_0006_auto_20170707_0908'),
+        ('dj_bioinformatics_protein', '0006_auto_20170707_0908'),
     ]
 
     operations = [
